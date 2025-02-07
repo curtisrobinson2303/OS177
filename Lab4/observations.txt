@@ -1,0 +1,21 @@
+Step 4:  Explain what happens when you run the threadHello.c program? Do you get the same result if you run it
+multiple times? What do you would happen if you were also running some other demanding processes
+(e.g., compiling a big program, playing a Flash game on a website, or watching streaming video) when
+you ran this program?
+
+    I notice that when this program is ran multiple times the "Hello from thread X" is random each time, meaning they appear at in a random order. Additionally, in both cases the threads are returned in the same order which makes sense. 
+
+The function go() has the parameter arg passed as a local variable. Are these variables per-thread or
+shared state? Where does the compiler store these variables’ states? Note that each thread has its own
+stack.
+    This arg is shared and that is why the thread number stays the same the whole time "Hello from thread n" is printed to the console. 
+
+The main() function has a local variable i. Is this variable per-thread or shared state? Where does the
+compiler store this variable?
+    This local variable i is in a local state because the compiler stores this variable with in that current threads stack. 
+
+Delete the second for loop in threadHello.c program so that the main function simply creates
+NTHREADS threads and then prints “Main thread done” and immediately returns. What are the possible
+outputs of the program now? Explain. Count the number of lines of output if needed.
+    Since the program now does not call pthread join to return back from the child threads the Hello from can exist on any thread and the top parent can be returned whenever from the perspective of the output. 
+    Additionally, the number of lines in the output is 20. 
