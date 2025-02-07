@@ -8,9 +8,9 @@
 #include <pthread.h>
 #include <time.h>
 
-#define N 256 // Matrix dimensions
-#define M 256
-#define L 256
+#define N 2 // Matrix dimensions
+#define M 2
+#define L 2
 
 // Structure to pass arguments to threads
 typedef struct {
@@ -44,21 +44,37 @@ int main() {
     int matrixB[M][L];
     int matrixC[N][L];
 
-    // Seed random number generator
     srand(time(NULL));
 
-    // Initialize matrices with random values
+    // Initialize matrices with random values as per instructions
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
             matrixA[i][j] = rand() % 10;
         }
     }
-
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < L; j++) {
             matrixB[i][j] = rand() % 10;
         }
     }
+
+
+    printf("A Matrix:\n");
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < L; j++) {
+            printf("%d ", matrixA[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("B Matrix:\n");
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < L; j++) {
+            printf("%d ", matrixB[i][j]);
+        }
+        printf("\n");
+    }
+
 
     // Create an array of threads
     pthread_t threads[N];
@@ -77,7 +93,7 @@ int main() {
         }
     }
 
-    // Wait for all threads to finish
+    // Waiting for all threads to finish
     for (int i = 0; i < N; i++) {
         if (pthread_join(threads[i], NULL)) {
             fprintf(stderr, "Error joining thread\n");
@@ -85,9 +101,6 @@ int main() {
         }
     }
 
-    // Print the result matrix (optional)
-    // ... (Code to print matrixC) ...
-    // Print the result matrix
     printf("Result Matrix:\n");
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < L; j++) {
