@@ -1,0 +1,21 @@
+Lab 2 General Observations 
+
+----------------------------------------------------------------
+
+Step 1: 
+    N/A
+Step 2: 
+    N/A
+Step 3: 
+    This program requires an input of miliseconds denoted by the code argv[1]
+
+Step 4: 
+    500: The delay is short and the loop exectues at a more rapid interval
+    5000: The delay is longer and the loop exectues at a less rapid interval
+
+Step 5: 
+    N/A
+Step 6: 
+    N/A
+Step 7: 
+    N/A

@@ -1,0 +1,9 @@
+Lab 3 - COEN 177 
+Curtis Robinson 
+
+Step 1: N/A
+Step 2: N/A
+Step 3: N/A
+Step 4: N/A
+Step 5: N/A
+Step 6: There are 10 threads created and the values of i that appear in the output are 1-8.
