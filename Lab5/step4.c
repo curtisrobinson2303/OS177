@@ -1,84 +1,80 @@
+// Name: Curtis Robinson
+// Date: Feb 10th 2025
+// Title: Lab5 – Step 4
+// Description: In this program the goal is to create the same producer consumer
+// model to prevent race conditions in the critical area. This will be done with
+// mutex locks instead of semaphores as previously used in step 3.
+
+#include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
-#include <pthread.h>
 
 #define BUFFER_SIZE 5
 
 int buffer[BUFFER_SIZE];
-int in = 0;
-int out = 0;
-int count = 0; 
+int buffer_count = 0;
 
-pthread_mutex_t mutex;
-pthread_cond_t empty, full; 
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t full = PTHREAD_COND_INITIALIZER;
+pthread_cond_t empty = PTHREAD_COND_INITIALIZER;
 
-void* producer(void* arg) {
-    int item;
-    while (1) {
-        item = rand() % 100; // Produce an item
-        printf("Producer produced: %d\n", item);
+void *producer(void *arg) {
+  srand(time(NULL));
 
-        pthread_mutex_lock(&mutex);
+  while (1) {
+    int item = rand() % 100 + 1;
+    printf("Producer produced: %d\n", item);
 
-        while (count == BUFFER_SIZE) { // Buffer is full
-            pthread_cond_wait(&empty, &mutex); 
-        }
-
-        buffer[in] = item;
-        in = (in + 1) % BUFFER_SIZE;
-        count++;
-
-        pthread_cond_signal(&full); 
-        pthread_mutex_unlock(&mutex);
+    pthread_mutex_lock(&lock);
+    while (buffer_count == BUFFER_SIZE) {
+      pthread_cond_wait(&empty, &lock);
     }
+
+    buffer[buffer_count] = item;
+    buffer_count++;
+
+    pthread_cond_signal(&full);
+    pthread_mutex_unlock(&lock);
+
+    usleep(20000);
+  }
+  return NULL;
 }
 
-void* consumer(void* arg) {
-    int item;
-    while (1) {
-        pthread_mutex_lock(&mutex);
-
-        while (count == 0) { // Buffer is empty
-            pthread_cond_wait(&full, &mutex); 
-        }
-
-        item = buffer[out];
-        out = (out + 1) % BUFFER_SIZE;
-        count--;
-
-        pthread_cond_signal(&empty); 
-        pthread_mutex_unlock(&mutex);
-
-        printf("Consumer consumed: %d\n", item);
+void *consumer(void *arg) {
+  while (1) {
+    pthread_mutex_lock(&lock);
+    while (buffer_count == 0) {
+      pthread_cond_wait(&full, &lock);
     }
+
+    int item = buffer[0]; // Correct access: Get the *first* item
+    // Shift remaining elements
+    for (int i = 0; i < buffer_count - 1; i++) {
+      buffer[i] = buffer[i + 1];
+    }
+    buffer_count--;
+
+    printf("Consumer consumed: %d\n", item);
+
+    pthread_cond_signal(&empty);
+    pthread_mutex_unlock(&lock);
+
+    usleep(30000);
+  }
+  return NULL;
 }
 
 int main() {
-    pthread_t producer_thread, consumer_thread;
+  pthread_t producer_thread, consumer_thread;
 
-    // Initialize mutex and condition variables
-    pthread_mutex_init(&mutex, NULL);
-    pthread_cond_init(&empty, NULL);
-    pthread_cond_init(&full, NULL);
+  pthread_create(&producer_thread, NULL, producer, NULL);
+  pthread_create(&consumer_thread, NULL, consumer, NULL);
 
-    // Create producer and consumer threads
-    pthread_create(&producer_thread, NULL, producer, NULL);
-    pthread_create(&consumer_thread, NULL, consumer, NULL);
+  pthread_join(producer_thread, NULL);
+  pthread_join(consumer_thread, NULL);
 
-    // Join threads (not necessary in this infinite loop scenario)
-    // pthread_join(producer_thread, NULL);
-    // pthread_join(consumer_thread, NULL);
-
-    // Keep the program running (you might want to add a termination condition)
-    while (1) {
-        sleep(1); // Sleep to avoid excessive CPU usage
-    }
-
-    // Clean up (optional)
-    pthread_mutex_destroy(&mutex);
-    pthread_cond_destroy(&empty);
-    pthread_cond_destroy(&full);
-
-    return 0;
+  return 0;
 }

@@ -1,3 +1,9 @@
 Step 1: Explain what happens when you run the threadSync.c program? How does this program differ from the
 threadHello.c program?
-
+    When the program threadSync is ran we see that each of the 0 - N threads cannot run unless the other thread is out of the critical seciton. This is crucial because it demonstrates the use of synchronization and semaphores in this implementation. 
+Step 2: 
+    N/A -> Demo
+Step 3: 
+    N/A -> Demo
+Step 4: 
+    N/A --> Demo

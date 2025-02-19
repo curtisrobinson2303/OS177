@@ -1,3 +1,9 @@
+// Name: Curtis Robinson
+// Date: Feb 10th 2025
+// Title: Lab5 – Step 1
+// Description: In this step I am tasked to run this program and breakdown what
+// is happening with the use of semaphores
+
 // Thread Sychronization
 // To compile this code:
 // If using the SCU Linux lab first add #include<fcntl.h>
