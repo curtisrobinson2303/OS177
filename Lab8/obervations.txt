@@ -1,0 +1,15 @@
+Implementation Descriptions: 
+    1. FIFO
+        This page repalcement algorithm works by using the first in first out methadology. It focuses on using iterating through the cache to determine if a desired page is in there. If it is then the algorithm continues to execture. If it is not then the first in page is replaced and a new page is replaced in at the end of cache using the fifoIndex counter.
+    2. LRU
+        This page replacement algorithm works by using the least recently used algorithm. This works by using a counter to determined if there is a slot in the cache that is empty. 
+        If there is then the the algorithm adds the new page into the cache. If not, then the algorithm replaces the least used page from the cache. It does this by incrementing the corresponding index in the lru_time array. 
+        This array stores the corresponding existance time for each page in the LRU and when a page is access the time is reset because it is the most recent and so on.
+    3. Second Chance
+        This algorithm uses the second chance methadology. It specificly uses a reference bit for each of the pages in the cache to determine the likeliness of an additional cache it. This is useful because it prioritizes cache hits and its replacement policy of of the pass cache hits of a page. A page replacement occurs when a pages reference bit is set to 0 preventing pages with reference values of 1 to be replaced.
+    numberGen.c
+        This file allows creates a list of random number that are the length of numRequests. for each of the entries for numRequests the buffer prints out a random value calculated by the runction rand() % possiblePages.
+    runner.sh
+        This bash file allows for sequential execution of each page replacement algorithm. It begins by executing fifo, lru, and sec_chance with the testInput.txt 
+        file generated with numberGen.c and then proceeds to execute the test cases of cache size 10, 50, 100, 250, 500 for each of the pageReplacement algorithms. 
+        lastly it cleans the make file which removes all of the generated files during the make process to prevent execess files in the dev directory.
