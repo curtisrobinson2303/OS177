@@ -1,3 +1,5 @@
+// Name: Curtis Robinson
+// Description: writing to a new file every time
 #include <stdio.h>
 #include <stdlib.h>
 

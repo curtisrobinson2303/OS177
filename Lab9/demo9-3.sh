@@ -24,7 +24,7 @@ echo "C: Step 5"
 time ./Step5 file3.bin 10000 4
 ls -l file?.bin copy*.out
 sleep 3
-diff --from-file=file3.bin copy*.out
+diff file3.bin copy*.out
 rm -f copy*.out
 sleep 2
 

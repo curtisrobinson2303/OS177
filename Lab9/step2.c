@@ -1,3 +1,8 @@
+// Name: Curtis Robinson
+// Description: This program reads all the content from a file and measures the
+// time it takes to read the whole file.
+//
+
 #include <stdio.h>
 #include <stdlib.h>
 

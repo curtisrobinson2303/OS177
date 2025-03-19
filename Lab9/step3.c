@@ -1,3 +1,7 @@
+// Name: Curtis Robinson
+// Description: measure the i/o performance for each of the files
+//
+
 #include <stdio.h>
 #include <stdlib.h>
 

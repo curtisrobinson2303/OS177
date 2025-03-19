@@ -1,3 +1,5 @@
+// Name: Curtis Robinson
+// Description: Writing to new files on multiple threads
 #include <errno.h>
 #include <pthread.h>
 #include <stdio.h>
